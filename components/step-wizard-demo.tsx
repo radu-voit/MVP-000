@@ -1,46 +1,48 @@
 "use client"
 
 import { StepWizardProvider } from "@/lib/step-wizard-context"
+import { DataStoreProvider } from "@/lib/data-store-context"
 import { StepWizard } from "@/components/step-wizard/step-wizard"
-import { BasicFormStep } from "@/components/step-wizard/packages/basic-form-step"
-import { SelectionStep } from "@/components/step-wizard/packages/selection-step"
-import { ReactFlowStep } from "@/components/step-wizard/packages/react-flow-step"
-import { ReviewStep } from "@/components/step-wizard/packages/review-step"
+import { UploaderStep } from "@/components/step-wizard/packages/uploader-step"
+import { TableSummaryStep } from "@/components/step-wizard/packages/table-summary-step"
+import { BlankStep } from "@/components/step-wizard/packages/blank-step"
 
 const steps = [
   {
-    id: "basic-info",
-    title: "Basic Info",
-    component: BasicFormStep,
+    id: "step-1",
+    title: "Upload Data",
+    component: UploaderStep,
   },
   {
-    id: "selection",
-    title: "Selection",
-    component: SelectionStep,
+    id: "step-2",
+    title: "Table Summary",
+    component: TableSummaryStep,
   },
   {
-    id: "flow-design",
-    title: "Flow Design",
-    component: ReactFlowStep,
+    id: "step-3",
+    title: "Step 3",
+    component: BlankStep,
   },
   {
-    id: "review",
-    title: "Review",
-    component: ReviewStep,
+    id: "step-4",
+    title: "Step 4",
+    component: BlankStep,
   },
 ]
 
 export function StepWizardDemo() {
   return (
-    <div className="container mx-auto max-w-5xl py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">Step Wizard Package System</h1>
-        <p className="text-muted-foreground">A modular step-based wizard with data passing between steps</p>
-      </div>
+    <DataStoreProvider>
+      <div className="container mx-auto max-w-5xl py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold">Step Wizard Package System</h1>
+          <p className="text-muted-foreground">A modular step-based wizard with centralized data management</p>
+        </div>
 
-      <StepWizardProvider totalSteps={steps.length}>
-        <StepWizard steps={steps} />
-      </StepWizardProvider>
-    </div>
+        <StepWizardProvider totalSteps={steps.length}>
+          <StepWizard steps={steps} />
+        </StepWizardProvider>
+      </div>
+    </DataStoreProvider>
   )
 }
