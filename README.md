@@ -1,30 +1,56 @@
-# Experiment
+# Koios Monorepo
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+A sophisticated monorepo architecture built with Turborepo, featuring custom packages, dual-theme design system, and offline-first capabilities.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/koios-fc7ecafe/v0-experiment)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/wFMwAQWNPpk)
+## Architecture
 
-## Overview
+\`\`\`
+koios-monorepo/
+├── apps/
+│   └── web/                 # Next.js application
+├── packages/
+│   ├── logger/              # Pino-based logging
+│   ├── table/               # AG Grid tables
+│   ├── chart/               # Recharts visualizations
+│   └── upload/              # Advanced file uploader
+├── shared/
+│   └── core/                # Universal business logic
+├── libs/                    # Centrally referenced libraries
+└── public/
+    ├── base/theme/          # Base design system
+    └── client-000/theme/    # Client theme overrides
+\`\`\`
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+## Getting Started
 
-## Deployment
+### Installation
 
-Your project is live at:
+\`\`\`bash
+# Install dependencies
+pnpm install
 
-**[https://vercel.com/koios-fc7ecafe/v0-experiment](https://vercel.com/koios-fc7ecafe/v0-experiment)**
+# Build all packages
+pnpm build
 
-## Build your app
+# Start development
+pnpm dev
+\`\`\`
 
-Continue building your app on:
+### Offline Support
 
-**[https://v0.app/chat/projects/wFMwAQWNPpk](https://v0.app/chat/projects/wFMwAQWNPpk)**
+All packages are designed to work offline. Libraries are bundled and cached locally in the `libs/` folder.
 
-## How It Works
+## Packages
 
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+- **@koios/logger**: Structured logging with Pino
+- **@koios/table**: Data tables with AG Grid
+- **@koios/chart**: Charts with Recharts (Line, Bar, Pie)
+- **@koios/upload**: Advanced file uploader with drag-and-drop, folders, and ZIP support
+
+## Theme System
+
+Switch between base and client themes using the theme switcher in the top right corner.
+
+## Security
+
+Built following Next.js best practices with security-first approach for production deployment.
