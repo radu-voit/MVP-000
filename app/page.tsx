@@ -186,6 +186,12 @@ export default function HuggingFaceTester() {
     }
   }, [apiKey])
 
+  useEffect(() => {
+    if (selectedTask) {
+      searchModels()
+    }
+  }, [selectedTask])
+
   const fetchAutocompleteSuggestions = async () => {
     try {
       const params = new URLSearchParams({ limit: "10" })
