@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Search, Info } from "lucide-react"
+import { Search, Info, Key } from "lucide-react"
 import { Slider } from "@/components/ui/slider"
 
 const MODEL_PRESETS = {
@@ -101,6 +101,8 @@ type ModelInfo = {
 }
 
 export default function HuggingFaceTester() {
+  const [apiKey, setApiKey] = useState("")
+  const [showApiKey, setShowApiKey] = useState(false)
   const [capability, setCapability] = useState<"generation" | "embedding">("generation")
   const [modelId, setModelId] = useState(MODEL_PRESETS.generation[0].id)
   const [prompt, setPrompt] = useState("Hello, how are you?")
@@ -164,6 +166,21 @@ export default function HuggingFaceTester() {
     }
   }, [modelId])
 
+  useEffect(() => {
+    const savedApiKey = localStorage.getItem("huggingface_api_key")
+    if (savedApiKey) {
+      setApiKey(savedApiKey)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (apiKey) {
+      localStorage.setItem("huggingface_api_key", apiKey)
+    } else {
+      localStorage.removeItem("huggingface_api_key")
+    }
+  }, [apiKey])
+
   const fetchAutocompleteSuggestions = async () => {
     try {
       const params = new URLSearchParams({ limit: "10" })
@@ -192,7 +209,14 @@ export default function HuggingFaceTester() {
     setLoadingModelInfo(true)
     setModelInfo(null)
     try {
-      const res = await fetch(`/api/model-info?modelId=${encodeURIComponent(modelId)}`)
+      const headers: HeadersInit = {}
+      if (apiKey) {
+        headers["x-huggingface-api-key"] = apiKey
+      }
+
+      const res = await fetch(`/api/model-info?modelId=${encodeURIComponent(modelId)}`, {
+        headers,
+      })
       const data = await res.json()
 
       if (res.ok) {
@@ -271,6 +295,7 @@ export default function HuggingFaceTester() {
           prompt,
           taskType: capability,
           parameters,
+          apiKey: apiKey || undefined,
         }),
       })
 
@@ -406,6 +431,31 @@ export default function HuggingFaceTester() {
               <CardDescription>Select a capability and model to test</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Key className="h-4 w-4 text-muted-foreground" />
+                  <Label htmlFor="api-key">HuggingFace API Key (Optional)</Label>
+                </div>
+                <div className="flex gap-2">
+                  <Input
+                    id="api-key"
+                    type={showApiKey ? "text" : "password"}
+                    value={apiKey}
+                    onChange={(e) => setApiKey(e.target.value)}
+                    placeholder="hf_..."
+                    className="flex-1"
+                  />
+                  <Button variant="outline" size="sm" onClick={() => setShowApiKey(!showApiKey)} className="shrink-0">
+                    {showApiKey ? "Hide" : "Show"}
+                  </Button>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  {apiKey
+                    ? "Using your API key. It's stored locally in your browser."
+                    : "Using environment variable. Add your own key for personalized access."}
+                </p>
+              </div>
+
               <div className="space-y-2">
                 <Label htmlFor="capability">Capability</Label>
                 <Select value={capability} onValueChange={handleCapabilityChange}>

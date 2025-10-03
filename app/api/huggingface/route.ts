@@ -3,16 +3,22 @@ import { HfInference } from "@huggingface/inference"
 
 export async function POST(request: NextRequest) {
   try {
-    const { modelId, prompt, taskType, parameters = {} } = await request.json()
+    const { modelId, prompt, taskType, parameters = {}, apiKey } = await request.json()
 
     if (!modelId || !prompt) {
       return NextResponse.json({ error: "Model ID and prompt are required" }, { status: 400 })
     }
 
-    const HF_TOKEN = process.env.HUGGINGFACE_API_KEY
+    const HF_TOKEN = apiKey || process.env.HUGGINGFACE_API_KEY
 
     if (!HF_TOKEN) {
-      return NextResponse.json({ error: "HUGGINGFACE_API_KEY environment variable is not set" }, { status: 500 })
+      return NextResponse.json(
+        {
+          error:
+            "HuggingFace API key is required. Please provide your API key or set HUGGINGFACE_API_KEY environment variable.",
+        },
+        { status: 500 },
+      )
     }
 
     const hf = new HfInference(HF_TOKEN)
