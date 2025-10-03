@@ -1,0 +1,41 @@
+{
+  "name": "@koios/integration-neo4j",
+  "version": "1.0.0",
+  "description": "Neo4j graph database integration",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "dev-notes",
+    "documentation"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src --ext .ts,.tsx",
+    "test": "jest"
+  },
+  "keywords": [
+    "neo4j",
+    "graph",
+    "database",
+    "cypher",
+    "api"
+  ],
+  "author": "KOIOS Team",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "neo4j-driver": "^5.15.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "eslint": "^8.0.0",
+    "jest": "^29.0.0",
+    "@types/jest": "^29.0.0"
+  }
+}

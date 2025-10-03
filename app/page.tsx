@@ -58,6 +58,12 @@ export default function Page() {
           </div>
 
           <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm">
+              Last 24 hours
+            </Button>
+            <Button variant="outline" size="sm">
+              Export
+            </Button>
             <ThemeSettings />
             <Button variant="ghost" size="sm" onClick={handleLogout} className="gap-2">
               <LogOut className="h-4 w-4" />

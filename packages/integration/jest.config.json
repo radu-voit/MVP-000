@@ -1,0 +1,29 @@
+{
+  "preset": "ts-jest",
+  "testEnvironment": "node",
+  "setupFilesAfterEnv": ["<rootDir>/src/setupTests.ts"],
+  "moduleNameMapping": {
+    "^@/(.*)$": "<rootDir>/src/$1",
+    "^@hugging-face/(.*)$": "<rootDir>/hugging-face/src/$1",
+    "^@vercel/(.*)$": "<rootDir>/vercel/src/$1",
+    "^@google/(.*)$": "<rootDir>/google/src/$1",
+    "^@neo4j/(.*)$": "<rootDir>/neo4j/src/$1"
+  },
+  "collectCoverageFrom": [
+    "src/**/*.{ts,tsx}",
+    "hugging-face/src/**/*.{ts,tsx}",
+    "vercel/src/**/*.{ts,tsx}",
+    "google/src/**/*.{ts,tsx}",
+    "neo4j/src/**/*.{ts,tsx}",
+    "!src/**/*.d.ts",
+    "!src/setupTests.ts"
+  ],
+  "coverageThreshold": {
+    "global": {
+      "branches": 80,
+      "functions": 80,
+      "lines": 80,
+      "statements": 80
+    }
+  }
+}

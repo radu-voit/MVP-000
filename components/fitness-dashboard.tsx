@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ThemeSettings } from "@/components/theme-settings"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Bar, BarChart, Line, LineChart, RadialBar, RadialBarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
@@ -41,20 +40,6 @@ export function FitnessDashboard() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card">
-        <div className="flex h-16 items-center gap-4 px-6">
-          <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-              <Activity className="h-5 w-5 text-primary-foreground" />
-            </div>
-            <h1 className="text-xl font-semibold">Fitness Dashboard</h1>
-          </div>
-          <div className="ml-auto">
-            <ThemeSettings />
-          </div>
-        </div>
-      </header>
 
       {/* Main Content */}
       <main className="p-4 md:p-6">

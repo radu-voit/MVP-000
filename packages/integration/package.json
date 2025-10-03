@@ -1,0 +1,55 @@
+{
+  "name": "@koios/integration",
+  "version": "1.0.0",
+  "description": "Integration package with sub-packages for external services",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "hugging-face",
+    "vercel",
+    "google",
+    "neo4j",
+    "dev-notes",
+    "documentation"
+  ],
+  "scripts": {
+    "build": "tsc && npm run build:subpackages",
+    "build:subpackages": "npm run build --workspace=hugging-face && npm run build --workspace=vercel && npm run build --workspace=google && npm run build --workspace=neo4j",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist && npm run clean --workspaces",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src --ext .ts,.tsx",
+    "test": "jest",
+    "test:all": "npm run test && npm run test --workspaces"
+  },
+  "keywords": [
+    "integration",
+    "hugging-face",
+    "vercel",
+    "google",
+    "neo4j",
+    "api",
+    "typescript"
+  ],
+  "author": "KOIOS Team",
+  "license": "MIT",
+  "workspaces": [
+    "hugging-face",
+    "vercel", 
+    "google",
+    "neo4j"
+  ],
+  "dependencies": {
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "eslint": "^8.0.0",
+    "jest": "^29.0.0",
+    "@types/jest": "^29.0.0"
+  }
+}

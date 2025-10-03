@@ -1,0 +1,43 @@
+{
+  "name": "@koios/integration-google",
+  "version": "1.0.0",
+  "description": "Google Cloud Services integration",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "dev-notes",
+    "documentation"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src --ext .ts,.tsx",
+    "test": "jest"
+  },
+  "keywords": [
+    "google",
+    "cloud",
+    "gcp",
+    "api",
+    "services"
+  ],
+  "author": "KOIOS Team",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "@google-cloud/storage": "^7.0.0",
+    "@google-cloud/translate": "^8.0.0",
+    "@google-cloud/vision": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "eslint": "^8.0.0",
+    "jest": "^29.0.0",
+    "@types/jest": "^29.0.0"
+  }
+}

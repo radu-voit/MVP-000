@@ -9,32 +9,11 @@ import { BarChartComponent } from "@/components/charts/bar-chart"
 import { ScatterChartComponent } from "@/components/charts/scatter-chart"
 import { D3NetworkGraph } from "@/components/charts/d3-network-graph"
 import { D3ForceGraph } from "@/components/charts/d3-force-graph"
-import { ThemeSettings } from "@/components/theme-settings"
 import { Activity, BarChart3, Network, TrendingUp, Zap } from "lucide-react"
 
 export function Dashboard() {
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card">
-        <div className="flex h-16 items-center gap-4 px-6">
-          <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-              <Activity className="h-5 w-5 text-primary-foreground" />
-            </div>
-            <h1 className="text-xl font-semibold">DataViz Suite</h1>
-          </div>
-          <div className="ml-auto flex items-center gap-2">
-            <ThemeSettings />
-            <Button variant="outline" size="sm">
-              Last 24 hours
-            </Button>
-            <Button variant="outline" size="sm">
-              Export
-            </Button>
-          </div>
-        </div>
-      </header>
 
       {/* Main Content */}
       <main className="p-6">
