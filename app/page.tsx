@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Search, Info } from "lucide-react"
+import { Search, Info, Key } from "lucide-react"
 import { Slider } from "@/components/ui/slider"
 
 const MODEL_PRESETS = {
@@ -101,6 +101,13 @@ type ModelInfo = {
 }
 
 export default function HuggingFaceTester() {
+  const [apiKey, setApiKey] = useState("")
+  const [showApiKey, setShowApiKey] = useState(false)
+  const [validatingApiKey, setValidatingApiKey] = useState(false)
+  const [apiKeyValidation, setApiKeyValidation] = useState<{
+    status: "idle" | "valid" | "invalid"
+    message: string
+  }>({ status: "idle", message: "" })
   const [capability, setCapability] = useState<"generation" | "embedding">("generation")
   const [modelId, setModelId] = useState(MODEL_PRESETS.generation[0].id)
   const [prompt, setPrompt] = useState("Hello, how are you?")
@@ -164,6 +171,27 @@ export default function HuggingFaceTester() {
     }
   }, [modelId])
 
+  useEffect(() => {
+    const savedApiKey = localStorage.getItem("huggingface_api_key")
+    if (savedApiKey) {
+      setApiKey(savedApiKey)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (apiKey) {
+      localStorage.setItem("huggingface_api_key", apiKey)
+    } else {
+      localStorage.removeItem("huggingface_api_key")
+    }
+  }, [apiKey])
+
+  useEffect(() => {
+    if (selectedTask) {
+      searchModels()
+    }
+  }, [selectedTask])
+
   const fetchAutocompleteSuggestions = async () => {
     try {
       const params = new URLSearchParams({ limit: "10" })
@@ -192,7 +220,14 @@ export default function HuggingFaceTester() {
     setLoadingModelInfo(true)
     setModelInfo(null)
     try {
-      const res = await fetch(`/api/model-info?modelId=${encodeURIComponent(modelId)}`)
+      const headers: HeadersInit = {}
+      if (apiKey) {
+        headers["x-huggingface-api-key"] = apiKey
+      }
+
+      const res = await fetch(`/api/model-info?modelId=${encodeURIComponent(modelId)}`, {
+        headers,
+      })
       const data = await res.json()
 
       if (res.ok) {
@@ -271,6 +306,7 @@ export default function HuggingFaceTester() {
           prompt,
           taskType: capability,
           parameters,
+          apiKey: apiKey || undefined,
         }),
       })
 
@@ -288,8 +324,49 @@ export default function HuggingFaceTester() {
     }
   }
 
+  const validateApiKey = async () => {
+    if (!apiKey.trim()) {
+      setApiKeyValidation({
+        status: "invalid",
+        message: "Please enter an API key",
+      })
+      return
+    }
+
+    setValidatingApiKey(true)
+    setApiKeyValidation({ status: "idle", message: "" })
+
+    try {
+      const res = await fetch(`/api/model-info?modelId=gpt2`, {
+        headers: {
+          "x-huggingface-api-key": apiKey,
+        },
+      })
+
+      if (res.ok) {
+        setApiKeyValidation({
+          status: "valid",
+          message: "API key is valid and working!",
+        })
+      } else {
+        const data = await res.json()
+        setApiKeyValidation({
+          status: "invalid",
+          message: data.error || "API key validation failed",
+        })
+      }
+    } catch (err: any) {
+      setApiKeyValidation({
+        status: "invalid",
+        message: err.message || "Failed to validate API key",
+      })
+    } finally {
+      setValidatingApiKey(false)
+    }
+  }
+
   return (
-    <div className="min-h-screen bg-background p-8">
+    <div className="min-h-screen bg-blue-500 p-8">
       <div className="mx-auto max-w-6xl space-y-8">
         <div className="text-center">
           <h1 className="text-4xl font-bold">HuggingFace Model Tester</h1>
@@ -406,6 +483,54 @@ export default function HuggingFaceTester() {
               <CardDescription>Select a capability and model to test</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Key className="h-4 w-4 text-muted-foreground" />
+                  <Label htmlFor="api-key">HuggingFace API Key (Optional)</Label>
+                </div>
+                <div className="flex gap-2">
+                  <Input
+                    id="api-key"
+                    type={showApiKey ? "text" : "password"}
+                    value={apiKey}
+                    onChange={(e) => {
+                      setApiKey(e.target.value)
+                      setApiKeyValidation({ status: "idle", message: "" })
+                    }}
+                    placeholder="hf_..."
+                    className="flex-1"
+                  />
+                  <Button variant="outline" size="sm" onClick={() => setShowApiKey(!showApiKey)} className="shrink-0">
+                    {showApiKey ? "Hide" : "Show"}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={validateApiKey}
+                    disabled={validatingApiKey || !apiKey.trim()}
+                    className="shrink-0 bg-transparent"
+                  >
+                    {validatingApiKey ? "Validating..." : "Validate"}
+                  </Button>
+                </div>
+                {apiKeyValidation.status !== "idle" && (
+                  <div
+                    className={`rounded-md border p-2 text-xs ${
+                      apiKeyValidation.status === "valid"
+                        ? "border-green-500 bg-green-500/10 text-green-700 dark:text-green-400"
+                        : "border-destructive bg-destructive/10 text-destructive"
+                    }`}
+                  >
+                    {apiKeyValidation.message}
+                  </div>
+                )}
+                <p className="text-xs text-muted-foreground">
+                  {apiKey
+                    ? "Using your API key. It's stored locally in your browser."
+                    : "Using environment variable. Add your own key for personalized access."}
+                </p>
+              </div>
+
               <div className="space-y-2">
                 <Label htmlFor="capability">Capability</Label>
                 <Select value={capability} onValueChange={handleCapabilityChange}>

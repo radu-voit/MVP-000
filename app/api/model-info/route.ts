@@ -9,7 +9,8 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Model ID is required" }, { status: 400 })
     }
 
-    const HF_TOKEN = process.env.HUGGINGFACE_API_KEY
+    const userApiKey = request.headers.get("x-huggingface-api-key")
+    const HF_TOKEN = userApiKey || process.env.HUGGINGFACE_API_KEY
 
     const headers: HeadersInit = {
       "Content-Type": "application/json",
