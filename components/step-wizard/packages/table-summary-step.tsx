@@ -2,15 +2,13 @@
 
 import { useDataStore } from "@/lib/data-store-context"
 import { Card } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { FileSpreadsheet, AlertCircle } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
+import { FileSpreadsheet, AlertCircle, Table2, Columns3, FileX } from "lucide-react"
 
 /**
  * TABLE SUMMARY STEP PACKAGE
  *
- * Displays a summary of uploaded table data from the data store.
- * Shows file information, row/column counts, and a preview of the data.
+ * Displays key metrics of uploaded table data from the data store.
+ * Shows number of rows, headers, and empty fields.
  *
  * @see docs/PACKAGES.md for package documentation
  * @see docs/DEV_NOTES.md for development notes
@@ -28,7 +26,7 @@ export function TableSummaryStep() {
       <div className="space-y-6">
         <div>
           <h2 className="text-2xl font-bold mb-2">Table Summary</h2>
-          <p className="text-muted-foreground">View a summary of your uploaded data</p>
+          <p className="text-muted-foreground">View key metrics of your uploaded data</p>
         </div>
 
         <Card className="p-8 text-center">
@@ -40,79 +38,85 @@ export function TableSummaryStep() {
     )
   }
 
-  // Get column names from first row
   const columns = tableData.length > 0 ? Object.keys(tableData[0]) : []
   const rowCount = tableData.length
-  const columnCount = columns.length
+  const headerCount = columns.length
 
-  // Preview first 10 rows
-  const previewData = tableData.slice(0, 10)
+  // Count empty fields across all rows
+  let emptyFieldCount = 0
+  tableData.forEach((row) => {
+    columns.forEach((col) => {
+      const value = row[col]
+      if (value === null || value === undefined || value === "" || (typeof value === "string" && value.trim() === "")) {
+        emptyFieldCount++
+      }
+    })
+  })
+
+  const totalFields = rowCount * headerCount
+  const emptyPercentage = totalFields > 0 ? ((emptyFieldCount / totalFields) * 100).toFixed(1) : "0"
 
   return (
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-bold mb-2">Table Summary</h2>
-        <p className="text-muted-foreground">Overview of your uploaded data</p>
+        <p className="text-muted-foreground">Key metrics of your uploaded data</p>
       </div>
 
-      {/* File Information */}
-      <Card className="p-6">
-        <div className="flex items-start gap-4">
-          <FileSpreadsheet className="h-8 w-8 text-primary" />
-          <div className="flex-1">
-            <h3 className="font-semibold text-lg mb-2">{latestFile.name}</h3>
-            <div className="flex flex-wrap gap-2">
-              <Badge variant="secondary">{rowCount} rows</Badge>
-              <Badge variant="secondary">{columnCount} columns</Badge>
-              <Badge variant="secondary">{(latestFile.size / 1024).toFixed(2)} KB</Badge>
+      {/* Key Metrics Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Number of Rows */}
+        <Card className="p-6">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-primary/10 rounded-lg">
+              <Table2 className="h-6 w-6 text-primary" />
             </div>
-            <p className="text-sm text-muted-foreground mt-2">Uploaded {latestFile.uploadedAt.toLocaleString()}</p>
+            <div>
+              <p className="text-sm text-muted-foreground">Total Rows</p>
+              <p className="text-3xl font-bold">{rowCount.toLocaleString()}</p>
+            </div>
+          </div>
+        </Card>
+
+        {/* Number of Headers */}
+        <Card className="p-6">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-blue-500/10 rounded-lg">
+              <Columns3 className="h-6 w-6 text-blue-500" />
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Headers</p>
+              <p className="text-3xl font-bold">{headerCount}</p>
+            </div>
+          </div>
+        </Card>
+
+        {/* Empty Fields */}
+        <Card className="p-6">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-orange-500/10 rounded-lg">
+              <FileX className="h-6 w-6 text-orange-500" />
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Empty Fields</p>
+              <p className="text-3xl font-bold">{emptyFieldCount.toLocaleString()}</p>
+              <p className="text-xs text-muted-foreground mt-1">{emptyPercentage}% of total</p>
+            </div>
+          </div>
+        </Card>
+      </div>
+
+      {/* File Info Card */}
+      <Card className="p-6 bg-muted/50">
+        <div className="flex items-center gap-3">
+          <FileSpreadsheet className="h-5 w-5 text-muted-foreground" />
+          <div className="flex-1">
+            <p className="font-medium">{latestFile.name}</p>
+            <p className="text-sm text-muted-foreground">
+              {(latestFile.size / 1024).toFixed(2)} KB • Uploaded {latestFile.uploadedAt.toLocaleString()}
+            </p>
           </div>
         </div>
-      </Card>
-
-      {/* Column Names */}
-      <Card className="p-6">
-        <h3 className="font-semibold mb-3">Columns ({columnCount})</h3>
-        <div className="flex flex-wrap gap-2">
-          {columns.map((col, idx) => (
-            <Badge key={idx} variant="outline">
-              {col}
-            </Badge>
-          ))}
-        </div>
-      </Card>
-
-      {/* Data Preview */}
-      <Card className="p-6">
-        <h3 className="font-semibold mb-3">Data Preview (First 10 rows)</h3>
-        <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-12">#</TableHead>
-                {columns.map((col, idx) => (
-                  <TableHead key={idx}>{col}</TableHead>
-                ))}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {previewData.map((row, rowIdx) => (
-                <TableRow key={rowIdx}>
-                  <TableCell className="font-medium">{rowIdx + 1}</TableCell>
-                  {columns.map((col, colIdx) => (
-                    <TableCell key={colIdx}>
-                      {row[col] !== null && row[col] !== undefined ? String(row[col]) : "-"}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-        {rowCount > 10 && (
-          <p className="text-sm text-muted-foreground mt-4 text-center">Showing 10 of {rowCount} rows</p>
-        )}
       </Card>
     </div>
   )

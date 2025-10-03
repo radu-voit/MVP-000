@@ -5,6 +5,7 @@ import { DataStoreProvider } from "@/lib/data-store-context"
 import { StepWizard } from "@/components/step-wizard/step-wizard"
 import { UploaderStep } from "@/components/step-wizard/packages/uploader-step"
 import { TableSummaryStep } from "@/components/step-wizard/packages/table-summary-step"
+import { DataGridStep } from "@/components/step-wizard/packages/data-grid-step"
 import { BlankStep } from "@/components/step-wizard/packages/blank-step"
 
 const steps = [
@@ -20,8 +21,8 @@ const steps = [
   },
   {
     id: "step-3",
-    title: "Step 3",
-    component: BlankStep,
+    title: "Data Grid",
+    component: DataGridStep,
   },
   {
     id: "step-4",
