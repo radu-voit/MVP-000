@@ -41,8 +41,15 @@ export default function Page() {
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-card">
         <div className="flex h-14 items-center gap-4 px-6">
           <div className="flex flex-1 items-center gap-6">
-            <span className="text-lg font-semibold">KOIOS MVP</span>
+            <div className="flex flex-col">
+              <span className="text-lg font-semibold leading-tight">Koios Data Wizard</span>
+              <span className="text-xs text-muted-foreground">
+                A modular step-based wizard with centralized data management
+              </span>
+            </div>
+          </div>
 
+          <div className="flex items-center gap-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="sm" className="gap-1">
@@ -50,22 +57,13 @@ export default function Page() {
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start">
+              <DropdownMenuContent align="end">
                 <DropdownMenuItem onClick={() => setCurrentUI("step-wizard")}>Step Wizard</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setCurrentUI("dashboard-test")}>Dashboard Test UI</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setCurrentUI("fitness")}>Fitness Dashboard</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setCurrentUI("card-ui")}>Card UI Page</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm">
-              Last 24 hours
-            </Button>
-            <Button variant="outline" size="sm">
-              Export
-            </Button>
             <ThemeSettings />
             <Button variant="ghost" size="sm" onClick={handleLogout} className="gap-2">
               <LogOut className="h-4 w-4" />
