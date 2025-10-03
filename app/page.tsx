@@ -5,6 +5,7 @@ import { Dashboard } from "@/components/dashboard"
 import { FitnessDashboard } from "@/components/fitness-dashboard"
 import { CardUIPage } from "@/components/card-ui-page"
 import { LoginPage } from "@/components/login-page"
+import { ThemeSettings } from "@/components/theme-settings"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { ChevronDown, LogOut } from "lucide-react"
@@ -56,10 +57,13 @@ export default function Page() {
             </DropdownMenu>
           </div>
 
-          <Button variant="ghost" size="sm" onClick={handleLogout} className="gap-2">
-            <LogOut className="h-4 w-4" />
-            Logout
-          </Button>
+          <div className="flex items-center gap-2">
+            <ThemeSettings />
+            <Button variant="ghost" size="sm" onClick={handleLogout} className="gap-2">
+              <LogOut className="h-4 w-4" />
+              Logout
+            </Button>
+          </div>
         </div>
       </nav>
 

@@ -1,0 +1,46 @@
+{
+  "name": "@koios/data-grid",
+  "version": "1.0.0",
+  "description": "Data grid components for tabular data display and manipulation",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "dev-notes",
+    "documentation"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src --ext .ts,.tsx",
+    "test": "jest"
+  },
+  "keywords": [
+    "data-grid",
+    "table",
+    "grid",
+    "react",
+    "typescript"
+  ],
+  "author": "KOIOS Team",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "dependencies": {
+    "@tanstack/react-table": "^8.10.0",
+    "react-virtual": "^2.10.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "typescript": "^5.0.0",
+    "eslint": "^8.0.0",
+    "jest": "^29.0.0",
+    "@types/jest": "^29.0.0"
+  }
+}
