@@ -103,6 +103,11 @@ type ModelInfo = {
 export default function HuggingFaceTester() {
   const [apiKey, setApiKey] = useState("")
   const [showApiKey, setShowApiKey] = useState(false)
+  const [validatingApiKey, setValidatingApiKey] = useState(false)
+  const [apiKeyValidation, setApiKeyValidation] = useState<{
+    status: "idle" | "valid" | "invalid"
+    message: string
+  }>({ status: "idle", message: "" })
   const [capability, setCapability] = useState<"generation" | "embedding">("generation")
   const [modelId, setModelId] = useState(MODEL_PRESETS.generation[0].id)
   const [prompt, setPrompt] = useState("Hello, how are you?")
@@ -313,6 +318,47 @@ export default function HuggingFaceTester() {
     }
   }
 
+  const validateApiKey = async () => {
+    if (!apiKey.trim()) {
+      setApiKeyValidation({
+        status: "invalid",
+        message: "Please enter an API key",
+      })
+      return
+    }
+
+    setValidatingApiKey(true)
+    setApiKeyValidation({ status: "idle", message: "" })
+
+    try {
+      const res = await fetch(`/api/model-info?modelId=gpt2`, {
+        headers: {
+          "x-huggingface-api-key": apiKey,
+        },
+      })
+
+      if (res.ok) {
+        setApiKeyValidation({
+          status: "valid",
+          message: "API key is valid and working!",
+        })
+      } else {
+        const data = await res.json()
+        setApiKeyValidation({
+          status: "invalid",
+          message: data.error || "API key validation failed",
+        })
+      }
+    } catch (err: any) {
+      setApiKeyValidation({
+        status: "invalid",
+        message: err.message || "Failed to validate API key",
+      })
+    } finally {
+      setValidatingApiKey(false)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-blue-500 p-8">
       <div className="mx-auto max-w-6xl space-y-8">
@@ -441,14 +487,37 @@ export default function HuggingFaceTester() {
                     id="api-key"
                     type={showApiKey ? "text" : "password"}
                     value={apiKey}
-                    onChange={(e) => setApiKey(e.target.value)}
+                    onChange={(e) => {
+                      setApiKey(e.target.value)
+                      setApiKeyValidation({ status: "idle", message: "" })
+                    }}
                     placeholder="hf_..."
                     className="flex-1"
                   />
                   <Button variant="outline" size="sm" onClick={() => setShowApiKey(!showApiKey)} className="shrink-0">
                     {showApiKey ? "Hide" : "Show"}
                   </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={validateApiKey}
+                    disabled={validatingApiKey || !apiKey.trim()}
+                    className="shrink-0 bg-transparent"
+                  >
+                    {validatingApiKey ? "Validating..." : "Validate"}
+                  </Button>
                 </div>
+                {apiKeyValidation.status !== "idle" && (
+                  <div
+                    className={`rounded-md border p-2 text-xs ${
+                      apiKeyValidation.status === "valid"
+                        ? "border-green-500 bg-green-500/10 text-green-700 dark:text-green-400"
+                        : "border-destructive bg-destructive/10 text-destructive"
+                    }`}
+                  >
+                    {apiKeyValidation.message}
+                  </div>
+                )}
                 <p className="text-xs text-muted-foreground">
                   {apiKey
                     ? "Using your API key. It's stored locally in your browser."
