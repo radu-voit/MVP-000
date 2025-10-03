@@ -17,7 +17,7 @@ The `@koios/chart` package provides chart visualization components built on Rech
 - **react**: React framework (peer dependency)
 
 ### Development Commands
-```bash
+\`\`\`bash
 # Build the package
 npm run build
 
@@ -35,7 +35,7 @@ npm run test
 
 # Clean build artifacts
 npm run clean
-```
+\`\`\`
 
 ### Component Development
 1. Create component files in `src/components/`

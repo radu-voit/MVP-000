@@ -16,13 +16,13 @@ This package provides a comprehensive set of chart components built on top of Re
 
 ## Installation
 
-```bash
+\`\`\`bash
 npm install @koios/chart
-```
+\`\`\`
 
 ## Usage
 
-```tsx
+\`\`\`tsx
 import { AreaChart, BarChart, LineChart } from '@koios/chart';
 
 function Dashboard() {
@@ -40,7 +40,7 @@ function Dashboard() {
     </div>
   );
 }
-```
+\`\`\`
 
 ## Components
 

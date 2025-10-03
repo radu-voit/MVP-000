@@ -15,13 +15,13 @@ This package contains essential utilities, types, and constants used across all 
 
 ## Installation
 
-```bash
+\`\`\`bash
 npm install @koios/core
-```
+\`\`\`
 
 ## Usage
 
-```tsx
+\`\`\`tsx
 import { cn, formatDate, debounce, BaseEntity, API_ENDPOINTS } from '@koios/core';
 
 // Utility functions
@@ -37,7 +37,7 @@ interface User extends BaseEntity {
 
 // Constants
 const usersEndpoint = API_ENDPOINTS.USERS;
-```
+\`\`\`
 
 ## Utilities
 

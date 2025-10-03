@@ -15,7 +15,7 @@ The `@koios/core` package contains essential utilities, types, and constants use
 - **tailwind-merge**: Tailwind CSS class merging
 
 ### Development Commands
-```bash
+\`\`\`bash
 # Build the package
 npm run build
 
@@ -33,7 +33,7 @@ npm run test
 
 # Clean build artifacts
 npm run clean
-```
+\`\`\`
 
 ### Utility Development
 1. Create utility functions in `src/utils/`

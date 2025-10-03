@@ -30,7 +30,7 @@ This package provides a comprehensive integration solution with specialized sub-
 
 ## Installation
 
-```bash
+\`\`\`bash
 # Install main integration package
 npm install @koios/integration
 
@@ -39,12 +39,12 @@ npm install @koios/integration-hugging-face
 npm install @koios/integration-vercel
 npm install @koios/integration-google
 npm install @koios/integration-neo4j
-```
+\`\`\`
 
 ## Usage
 
 ### Hugging Face Integration
-```tsx
+\`\`\`tsx
 import { HuggingFaceClient } from '@koios/integration-hugging-face';
 
 const client = new HuggingFaceClient({
@@ -56,10 +56,10 @@ const result = await client.inference({
   inputs: 'Hello world',
   parameters: { max_length: 50 }
 });
-```
+\`\`\`
 
 ### Vercel Integration
-```tsx
+\`\`\`tsx
 import { VercelClient } from '@koios/integration-vercel';
 
 const client = new VercelClient({
@@ -67,10 +67,10 @@ const client = new VercelClient({
 });
 
 const deployments = await client.getDeployments();
-```
+\`\`\`
 
 ### Google Cloud Integration
-```tsx
+\`\`\`tsx
 import { GoogleClient } from '@koios/integration-google';
 
 const client = new GoogleClient({
@@ -79,10 +79,10 @@ const client = new GoogleClient({
 });
 
 const translation = await client.translate('Hello', 'es');
-```
+\`\`\`
 
 ### Neo4j Integration
-```tsx
+\`\`\`tsx
 import { Neo4jClient } from '@koios/integration-neo4j';
 
 const client = new Neo4jClient({
@@ -94,13 +94,13 @@ const client = new Neo4jClient({
 const result = await client.query({
   query: 'MATCH (n) RETURN n LIMIT 10'
 });
-```
+\`\`\`
 
 ## Architecture
 
 The integration package follows a monorepo structure with workspaces:
 
-```
+\`\`\`
 packages/integration/
 ├── hugging-face/          # Hugging Face sub-package
 ├── vercel/               # Vercel sub-package
@@ -109,7 +109,7 @@ packages/integration/
 ├── src/                  # Main integration utilities
 ├── dev-notes/            # Development guidelines
 └── documentation/        # User documentation
-```
+\`\`\`
 
 ## Configuration
 

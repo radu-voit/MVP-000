@@ -17,13 +17,13 @@ This package provides comprehensive logging capabilities with support for multip
 
 ## Installation
 
-```bash
+\`\`\`bash
 npm install @koios/logger
-```
+\`\`\`
 
 ## Usage
 
-```tsx
+\`\`\`tsx
 import { Logger, LogLevel } from '@koios/logger';
 
 // Create logger instance
@@ -39,7 +39,7 @@ logger.debug('Debug message', { userId: 123 });
 logger.info('User logged in', { userId: 123, timestamp: new Date() });
 logger.warn('Deprecated API used', { endpoint: '/api/old' });
 logger.error('Database connection failed', { error: new Error('Connection timeout') });
-```
+\`\`\`
 
 ## Services
 
@@ -62,7 +62,7 @@ logger.error('Database connection failed', { error: new Error('Connection timeou
 
 ## Configuration
 
-```tsx
+\`\`\`tsx
 const config: LoggerConfig = {
   level: 'info',
   format: 'json',
@@ -70,7 +70,7 @@ const config: LoggerConfig = {
   enableFile: true,
   enableRemote: false,
 };
-```
+\`\`\`
 
 ## Contributing
 

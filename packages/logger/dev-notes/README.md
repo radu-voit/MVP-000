@@ -15,7 +15,7 @@ The `@koios/logger` package provides comprehensive logging capabilities with mul
 - **@types/node**: Node.js type definitions
 
 ### Development Commands
-```bash
+\`\`\`bash
 # Build the package
 npm run build
 
@@ -33,7 +33,7 @@ npm run test
 
 # Clean build artifacts
 npm run clean
-```
+\`\`\`
 
 ### Service Development
 1. Create service classes in `src/services/`

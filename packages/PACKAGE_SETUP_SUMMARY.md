@@ -54,7 +54,7 @@ All 6 packages have been successfully configured with uniform structure, complia
 
 ### ✅ File Structure
 Each package follows the same structure:
-```
+\`\`\`
 packages/[package-name]/
 ├── src/
 │   ├── components/     # React components (where applicable)
@@ -72,7 +72,7 @@ packages/[package-name]/
 ├── .eslintrc.json     # ESLint configuration
 ├── jest.config.json   # Jest configuration
 └── .gitignore         # Git ignore rules
-```
+\`\`\`
 
 ## Compliance & Standards
 
@@ -110,7 +110,7 @@ packages/[package-name]/
 ## Development Commands
 
 For each package:
-```bash
+\`\`\`bash
 # Install dependencies
 npm install
 
@@ -131,7 +131,7 @@ npm run lint
 
 # Clean build artifacts
 npm run clean
-```
+\`\`\`
 
 ## Package Dependencies Summary
 

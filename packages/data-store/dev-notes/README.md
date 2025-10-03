@@ -17,7 +17,7 @@ The `@koios/data-store` package provides state management utilities built on Zus
 - **react**: React framework (peer dependency)
 
 ### Development Commands
-```bash
+\`\`\`bash
 # Build the package
 npm run build
 
@@ -35,7 +35,7 @@ npm run test
 
 # Clean build artifacts
 npm run clean
-```
+\`\`\`
 
 ### Store Development
 1. Create store definitions in `src/stores/`

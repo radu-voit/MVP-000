@@ -77,7 +77,7 @@ Successfully created a comprehensive integration package with 4 specialized sub-
 - **Type Safety**: Comprehensive TypeScript definitions
 
 ## File Structure
-```
+\`\`\`
 packages/integration/
 ├── src/                          # Main integration utilities
 │   ├── services/                 # Core services
@@ -99,12 +99,12 @@ packages/integration/
 ├── dev-notes/                    # Development guidelines
 ├── documentation/                # User documentation
 └── package.json                  # Main package config
-```
+\`\`\`
 
 ## Development Commands
 
 ### Main Package
-```bash
+\`\`\`bash
 # Build all packages
 npm run build
 
@@ -116,10 +116,10 @@ npm run test:all
 
 # Clean all builds
 npm run clean
-```
+\`\`\`
 
 ### Sub-Package Commands
-```bash
+\`\`\`bash
 # Build specific sub-package
 npm run build --workspace=hugging-face
 
@@ -128,7 +128,7 @@ npm run test --workspace=neo4j
 
 # Lint specific sub-package
 npm run lint --workspace=google
-```
+\`\`\`
 
 ## Package Dependencies Summary
 

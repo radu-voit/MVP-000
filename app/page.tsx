@@ -6,12 +6,13 @@ import { FitnessDashboard } from "@/components/fitness-dashboard"
 import { CardUIPage } from "@/components/card-ui-page"
 import { LoginPage } from "@/components/login-page"
 import { ThemeSettings } from "@/components/theme-settings"
+import { StepWizardDemo } from "@/components/step-wizard-demo"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { ChevronDown, LogOut } from "lucide-react"
 
 export default function Page() {
-  const [currentUI, setCurrentUI] = useState<"dashboard-test" | "fitness" | "card-ui">("dashboard-test")
+  const [currentUI, setCurrentUI] = useState<"dashboard-test" | "fitness" | "card-ui" | "step-wizard">("step-wizard")
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   useEffect(() => {
@@ -50,6 +51,7 @@ export default function Page() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">
+                <DropdownMenuItem onClick={() => setCurrentUI("step-wizard")}>Step Wizard</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setCurrentUI("dashboard-test")}>Dashboard Test UI</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setCurrentUI("fitness")}>Fitness Dashboard</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setCurrentUI("card-ui")}>Card UI Page</DropdownMenuItem>
@@ -74,6 +76,7 @@ export default function Page() {
       </nav>
 
       <div className="pt-14">
+        {currentUI === "step-wizard" && <StepWizardDemo />}
         {currentUI === "dashboard-test" && <Dashboard />}
         {currentUI === "fitness" && <FitnessDashboard />}
         {currentUI === "card-ui" && <CardUIPage />}

@@ -18,13 +18,13 @@ This package provides comprehensive file upload functionality with drag-and-drop
 
 ## Installation
 
-```bash
+\`\`\`bash
 npm install @koios/upload
-```
+\`\`\`
 
 ## Usage
 
-```tsx
+\`\`\`tsx
 import { FileUpload, useFileUpload } from '@koios/upload';
 
 function UploadComponent() {
@@ -44,7 +44,7 @@ function UploadComponent() {
     />
   );
 }
-```
+\`\`\`
 
 ## Components
 
@@ -74,7 +74,7 @@ function UploadComponent() {
 
 ## Configuration
 
-```tsx
+\`\`\`tsx
 const config: UploadConfig = {
   maxFileSize: 10 * 1024 * 1024, // 10MB
   allowedTypes: ['image/*', 'application/pdf'],
@@ -84,7 +84,7 @@ const config: UploadConfig = {
     'Authorization': 'Bearer token',
   },
 };
-```
+\`\`\`
 
 ## Contributing
 

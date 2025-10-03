@@ -24,7 +24,7 @@ The `@koios/integration` package provides a comprehensive integration solution w
 - `src/components/` - Demo components
 
 ### Development Commands
-```bash
+\`\`\`bash
 # Build all packages
 npm run build
 
@@ -39,7 +39,7 @@ npm run test:all
 
 # Lint all packages
 npm run lint
-```
+\`\`\`
 
 ### API Integration Patterns
 - Use axios for HTTP requests with proper error handling

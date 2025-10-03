@@ -17,15 +17,15 @@ This package provides powerful state management capabilities built on top of Zus
 
 ## Installation
 
-```bash
+\`\`\`bash
 npm install @koios/data-store
-```
+\`\`\`
 
 ## Usage
 
 ### Basic Store
 
-```tsx
+\`\`\`tsx
 import { createStore, useStore } from '@koios/data-store';
 
 const useCounterStore = createStore({
@@ -50,11 +50,11 @@ function Counter() {
     </div>
   );
 }
-```
+\`\`\`
 
 ### Persisted Store
 
-```tsx
+\`\`\`tsx
 import { createPersistedStore } from '@koios/data-store';
 
 const useUserStore = createPersistedStore({
@@ -73,7 +73,7 @@ const useUserStore = createPersistedStore({
   persist: true,
   storage: 'localStorage',
 });
-```
+\`\`\`
 
 ## Stores
 

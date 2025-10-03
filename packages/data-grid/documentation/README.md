@@ -18,13 +18,13 @@ This package provides powerful data grid components built on top of TanStack Tab
 
 ## Installation
 
-```bash
+\`\`\`bash
 npm install @koios/data-grid
-```
+\`\`\`
 
 ## Usage
 
-```tsx
+\`\`\`tsx
 import { DataGrid, useDataGrid } from '@koios/data-grid';
 
 function UserTable() {
@@ -49,7 +49,7 @@ function UserTable() {
     />
   );
 }
-```
+\`\`\`
 
 ## Components
 
